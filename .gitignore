@@ -57,3 +57,8 @@ neuralgame/neuralgame.vcxproj.filters
 *.exe
 Debug/neuralgame.exe
 *.suo
+*.sdf
+Debug/neuralgame.ilk
+*.sln
+neuralgame.VC.opendb
+*.log
