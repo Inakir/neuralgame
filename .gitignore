@@ -45,3 +45,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.exe
+.vs/neuralgame/v14/.suo
+*.exe
+*.idb
+*.vcxproj
+neuralgame/neuralgame.vcxproj.filters
+*.obj
+*.tlog
+*.pdb
+*.exe
+Debug/neuralgame.exe
+*.suo
