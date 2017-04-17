@@ -1,8 +1,3 @@
-// neural-net-tutorial.cpp
-// David Miller, http://millermattson.com/dave
-// See the associated video for instructions: http://vimeo.com/19569529
-
-
 #include <vector>
 #include <iostream>
 #include <cstdlib>
@@ -37,6 +32,7 @@ int main()
 	vector<double> inputs, targets, results;
 	int trainingPass = 0;
 
+	//these are the actual values that need to be filled in
 	vector<double> input_vals, target_vals;
 	input_vals =
 	{ 1.0, 0.0,
