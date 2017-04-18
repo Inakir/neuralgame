@@ -10,6 +10,27 @@
 
 using namespace std;
 
+void fillValues(vector<double> &inputs, vector<double> &targets, vector<double> &user_inputs, int index)
+{
+	int count = 0;
+	while (count < 32)
+	{
+		if (index >= user_inputs.size())
+		{
+			index = 0;
+		}
+		inputs.push_back(user_inputs[index]);
+		count++;
+		index++;
+	}
+
+	if (index >= user_inputs.size())
+	{
+		index = 0;
+	}
+	targets.push_back(user_inputs[index]);
+}
+
 void showVectorVals(string label, vector<double> &v)
 {
 	cout << label << " ";
@@ -26,85 +47,56 @@ int main()
 
 	vector<unsigned> topology;
 
-	topology = { 2, 4, 1 };
+	topology = { 32, 4, 4, 4, 4, 4, 4, 4, 4, 2, 1 };
 	Net nnet(topology);
 
 	vector<double> inputs, targets, results;
 	int trainingPass = 0;
-
+	int trainSamples = 2000;
 	//these are the actual values that need to be filled in
-	vector<double> input_vals, target_vals;
-	input_vals =
-	{ 1.0, 0.0,
-		1.0, 1.0,
-		1.0, 0.0,
-		0.0, 1.0,
-		0.0, 1.0,
-		0.0, 1.0,
-		0.0, 1.0,
-		1.0, 1.0,
-		1.0, 1.0,
-		0.0, 1.0,
-		0.0, 0.0,
-		0.0, 1.0,
-		0.0, 0.0,
-		0.0, 0.0,
-		1.0, 0.0 };
-	target_vals =
-	{ 1.0,
-		0.0,
-		1.0,
-		1.0,
-		1.0,
-		1.0,
-		1.0,
-		0.0,
-		0.0,
-		1.0,
-		0.0,
-		1.0,
-		0.0,
-		0.0,
-		1.0 };
-	int i = 0;
-	while (trainingPass<2000)
+	vector<double> user_inputs = { 1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0 };
+
+	int index = 0;
+	while (trainingPass<trainSamples)
 	{
-		if (i >= target_vals.size())
+		if (index >= user_inputs.size())
 		{
-			i = 0;
+			index = 0;
 		}
 		++trainingPass;
-		cout << endl << "Pass " << trainingPass;
+		
+		if (trainingPass > trainSamples - 32)
+			cout << endl << "Pass " << trainingPass;
 
 		inputs.clear();
 		targets.clear();
 
-		inputs.push_back(input_vals[i * 2]);
-		inputs.push_back(input_vals[i * 2 + 1]);
-		targets.push_back(target_vals[i]);
+		fillValues(inputs, targets, user_inputs, index);		//this fills in the user inputs
 
-		showVectorVals(": Inputs: ", inputs);
+		if (trainingPass > trainSamples - 32)
+			showVectorVals(": Inputs: ", inputs);
 
 		nnet.feedForward(inputs);
 
 		//collect the net's actual results
 		nnet.getResults(results);
-		showVectorVals(": Outputs: ", results);
+		if (trainingPass > trainSamples - 32)
+			showVectorVals(": Outputs: ", results);
 
 		//train the net on what outputs should have been
-		showVectorVals(": Targets: ", targets);
+		if (trainingPass > trainSamples - 32)
+			showVectorVals(": Targets: ", targets);
 		//assert(targets.size() == topology.back());
 
 		nnet.backProp(targets);
 
 		//report how well the training is working
-		cout << "Net recent average error: " << nnet.getRecentAverageError() << endl;
-		++i;
+		if (trainingPass > trainSamples - 32)
+			cout << "Net recent average error: " << nnet.getRecentAverageError() << endl;
+		++index;
 	}
 
 	cout << endl << "Done" << endl;
-
-	//inputs = {1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0};
 
 	int temp;
 	cin >> temp;
