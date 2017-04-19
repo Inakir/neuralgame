@@ -4,4 +4,12 @@ The video was created by a tutor named David Miller. I typed the whole neural ne
 provided in the video was changed to accomadate the scope of the game that is being implemented for the final project. David Miller's website can be found at
 http://millermattson.com/dave.
 
+FLTK:
+
+http://www.c-jump.com/bcc/common/Talk2/Cxx/FltkInstallVC/FltkInstallVC.html
+-This website walked me through installing FLTK 
+
+http://seriss.com/people/erco/fltk 
+- This website was used to learn what each of the functions did
+
 HOW TO RUN:
