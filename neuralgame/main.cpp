@@ -26,7 +26,7 @@ using namespace std;
 
 Fl_Window window(800, 400, "Guessing game");	//fltk window for the game
 
-vector<unsigned> topology = { 32,16,16,8,4,4,4,2,1 };	//Each value stands for how many neurons make up a layer. 
+vector<unsigned> topology = { 32,16,8,4,2,1 };	//Each value stands for how many neurons make up a layer. 
 														//Each layer is connected in the order that they are stored
 														//So the first and last values stand for the input and outputs 
 														//layers respectively, with all the values in between
