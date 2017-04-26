@@ -13,14 +13,29 @@ http://millermattson.com/dave.
 
     ```
     Download the Project
-	
+	Go to the 'Release' directory
+	Double click 'neuralgame.exe'
+	Have Fun!
     ```
 
-1. Run the rake task
+1. On build.tamu.edu
 
     ```
-    rake test:integration
+    Enable XMING
+	Open up putty
+	In the left hand side go to Connection->SSH->X11
+	Check the box that says "Enable X11 forwarding"
+	SSH into build.tamu.edu
+	CD into the project folder.
+	CD into neuralgame/neuralgame/neural game
     ```
+1.	Type in the following commands
+```
+g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
+Followed by
+./go
+This should open up the game for you to play if there are no errors
+```
 
 ### FLTK Information
 
