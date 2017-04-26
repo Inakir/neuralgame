@@ -8,7 +8,7 @@ The video was created by a tutor named David Miller. I typed the whole neural ne
 provided in the video was changed to accomadate the scope of the game that is being implemented for the final project. David Miller's website can be found at
 http://millermattson.com/dave.
 
-###Source Files
+### Source Files
 Source Files can be located in the neuralgame directory 
 
 ## How To Run
@@ -60,12 +60,12 @@ Have Fun!
     http://seriss.com/people/erco/fltk 
     ```
 
-###Documents	
+### Documents	
 1. Links
     - Link to Report: https://docs.google.com/document/d/1Vt0lIvnw9m2yctTW-PzG9zfHR6p3bjONT8KJZXVRPk8/edit?usp=sharing
     - Screenshots: Coming soon!
 
-###Contact Information
+### Contact Information
 ```
 Email: s546684@email.tamu.edu
 Phone #: Inaki Rosa
