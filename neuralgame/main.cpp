@@ -17,7 +17,7 @@
 using namespace std;
 
 Fl_Window window(800, 400, "Guessing game");
-vector<unsigned> topology = { 32,64,32,16,16,8,8,4,1 };
+vector<unsigned> topology = { 32,16,16,8,4,4,4,2,1 };
 Net nnet(topology);
 vector<double> inputs, targets, results;
 vector<double> user_inputs, AI_guesses;
@@ -36,7 +36,34 @@ double redsz = .000001;
 void endGame()
 {
 	correct_guesses = 0;
+	user_training = "\nTraining Choices: ";
+	user_choices = "\nYour Choices: ";
 	AI_choices = "\nAI Guesses:   ";
+
+	for (int i = 0; i < 32; i++) {
+
+		if (user_inputs[i] == 1.0)
+		{
+			user_training += "r";
+		}
+		else
+		{
+			user_training += "b";
+		}
+	}
+
+	for (int i = 1; i < 65; i++) {
+
+		if (user_inputs[i] == 1.0)
+		{
+			user_choices += "r";
+		}
+		else
+		{
+			user_choices += "b";
+		}
+	}
+	
 	for (int i = 0; i < 32; i++)
 	{
 		if (AI_guesses[i] == user_inputs[i + 65])
@@ -62,13 +89,16 @@ void fillValues(int index)
 	//loops until 32 inputs are found
 	while (count < 32)
 	{
+		//cout << index << " ";
 		inputs.push_back(user_inputs[index]);
 		count++;
 		index++;
 	}
 
+	//cout << index << " ";
 	//after 32 inputs have been filled, the 33rd is the output
 	targets.push_back(user_inputs[index]);
+	//cout << endl;
 }
 
 void showVectorVals(string label, vector<double> &v)
@@ -130,18 +160,21 @@ void setText(int i)
 void train()
 {
 	int index = 0;
-	int trainingPass = 0;
 	avg_blue = 0;
 	avg_red  = 0;
 	bluesz = .000001;
 	redsz  = .000001;
 
-	while (trainingPass<trainSamples)
+	for (int trainingPass = 0; trainingPass < trainSamples; ++trainingPass)
 	{
-		++trainingPass;
+		if (index >= user_inputs.size()-32)
+		{
+			index = 0;
+		}
 
-		if (trainingPass > trainSamples - 3)
-			cout << endl << "Pass " << trainingPass;
+		if (trainingPass > trainSamples - 3) {
+			//cout << endl << "Pass " << trainingPass;
+		}
 
 		inputs.clear();
 		targets.clear();
@@ -149,8 +182,9 @@ void train()
 		//this fills in the user inputs as well as the output based on what inedex we are on
 		fillValues(index);		
 
-		if (trainingPass > trainSamples - 3)
-			showVectorVals(": Inputs: ", inputs);
+		if (trainingPass > trainSamples - 3) {
+			//showVectorVals(": Inputs: ", inputs);
+		}
 
 		//passes the inputs through
 		nnet.feedForward(inputs);
@@ -158,8 +192,9 @@ void train()
 		//collect the outputs from the net
 		nnet.getResults(results);
 
-		if (trainingPass > trainSamples - 3)
-			showVectorVals(": Outputs: ", results);
+		if (trainingPass > trainSamples - 3) {
+			//showVectorVals(": Outputs: ", results);
+		}
 
 		if (targets[0] == 0.0 && trainingPass>trainSamples - 64) {
 			avg_blue += results[0];
@@ -171,15 +206,17 @@ void train()
 		}
 
 		//Shows what the target output was this iteration (only does it for last three)
-		if (trainingPass > trainSamples - 3)
-			showVectorVals(": Targets: ", targets);
+		if (trainingPass > trainSamples - 3) {
+			//showVectorVals(": Targets: ", targets);
+		}
 
 		//train the net on what outputs should have been
 		nnet.backProp(targets);
 
 		//report how well the training is working (last three iterations)
-		if (trainingPass > trainSamples - 3)
-			cout << "Net recent average error: " << nnet.getRecentAverageError() << endl;
+		if (trainingPass > trainSamples - 3) {
+			//cout << "Net recent average error: " << nnet.getRecentAverageError() << endl;
+		}
 	
 		++index;
 	}
@@ -194,6 +231,10 @@ void AI()
 	}
 	else if (user_inputs.size() > 64)	//Goes on here after 64 inputs and starts guessing
 	{
+		if (user_inputs.size() == 65)
+		{
+			train(); train(); train(); train(); train(); train(); train();
+		}
 		setText(2);
 		
 		//trains the net
@@ -219,7 +260,7 @@ void AI()
 		nnet.getResults(results);
 		
 		//This next line is for debugging purposes
-		cout << correct << " " << avg_red << " " << avg_blue << endl;
+		//cout << correct << " " << avg_red << " " << avg_blue << endl;
 		
 		if (results[0] < mid) 
 		{
@@ -252,7 +293,7 @@ void AI()
 	else if (user_inputs.size() > 32)	//Goes on here after 33 inputs have been recorded
 	{
 		setText(1);
-		train();
+		//train();
 	}
 	else
 	{
@@ -265,12 +306,14 @@ static void redPress(Fl_Widget *w, void* data)
 	if (user_inputs.size() <= 64) 
 	{ 
 		user_inputs.push_back(1.0);
-		user_training += "r";
+		//user_training += "r";
+		user_training += "x";
 		AI();
 	}
 	else						  
 	{ 
-		user_choices  += "r";
+		//user_choices += "r";
+		user_choices  += "x";
 		AI();
 		user_inputs.push_back(1.0);
 	}
@@ -281,15 +324,16 @@ static void bluePress(Fl_Widget *w, void* data)
 	if (user_inputs.size() <= 64) 
 	{ 
 		user_inputs.push_back(0.0);
-		user_training += "b"; 
+		//user_training += "b";
+		user_training += "x";
 		AI();
 	}
 	else						  
 	{
-		user_choices  += "b"; 
+		//user_choices += "b";
+		user_choices  += "x";
 		AI();
 		user_inputs.push_back(0.0);
-		cout << user_inputs.back();
 	}
 }
 
@@ -314,6 +358,4 @@ int main()
 	window.redraw();
 	
 	return Fl::run();
-	//delete input_disp;
-	//delete text;
 }
