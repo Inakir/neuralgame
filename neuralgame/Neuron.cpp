@@ -1,3 +1,11 @@
+//Inaki Rosa
+//CSCE 420-500
+//Final Project
+//Due 4/25/2017
+//Neuron.cpp
+//This file defines the functions of the Neuron class. This was mostly taken from the Neural network youtube video
+//For more info about the Neural Network check the readme
+
 #include "Neuron.h"
 
 double Neuron::eta = 0.15;    // overall net learning rate, [0.0..1.0]

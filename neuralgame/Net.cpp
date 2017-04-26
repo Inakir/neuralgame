@@ -1,3 +1,11 @@
+//Inaki Rosa
+//CSCE 420-500
+//Final Project
+//Due 4/25/2017
+//Net.cpp
+//This file defines the functions of the Net class. This was mostly taken from the Neural network youtube video
+//For more info about the Neural Network check the readme
+
 #include "Net.h"
 
 double Net::m_recentAverageSmoothingFactor = 100.0; // Number of training samples to average over

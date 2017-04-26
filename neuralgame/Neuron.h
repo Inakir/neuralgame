@@ -1,3 +1,11 @@
+//Inaki Rosa
+//CSCE 420-500
+//Final Project
+//Due 4/25/2017
+//Neuron.h
+//Header file for neauron class and contains connection struct. This was mostly taken from the Neural network youtube video
+//For more info about the Neural Network check the readme
+
 #include <vector>
 #include <iostream>
 #include <cstdlib>

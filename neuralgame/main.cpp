@@ -1,3 +1,11 @@
+//Inaki Rosa
+//CSCE 420-500
+//Final Project
+//Due 4/25/2017
+//main.cpp
+//This is the main page and handles the entirety of the game except the neural network stuff. 
+
+
 #include <vector>
 #include <iostream>
 #include <cstdlib>
