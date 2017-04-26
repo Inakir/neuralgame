@@ -33,10 +33,10 @@ Have Fun!
 	cd into the 'neuralgame' directory
 	
 	Type in the following command to compile the game:
-	::    g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
+	::  g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
 	
 	Once compiled run the game with the following command: 
-	::    ./go
+	::  ./go
 	
 	Have fun playing the game!
 	```
@@ -57,12 +57,13 @@ Have Fun!
     http://seriss.com/people/erco/fltk 
     ```
 
-1. Add Links
+### Links
 
     - Link to Report: https://docs.google.com/document/d/1Vt0lIvnw9m2yctTW-PzG9zfHR6p3bjONT8KJZXVRPk8/edit?usp=sharing
     - Screenshots: Coming soon!
 
-    ```
-    Email: s546684@email.tamu.edu
-	Phone #: Inaki Rosa
-    ```
+###Contact Information
+```
+Email: s546684@email.tamu.edu
+Phone #: Inaki Rosa
+```
