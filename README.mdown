@@ -9,7 +9,7 @@ http://millermattson.com/dave.
 
 ### How To Run
 
-1. If your computer can run .exe files
+	If your computer can run .exe files
 
     ```
     Download the Project
@@ -30,16 +30,16 @@ http://millermattson.com/dave.
 	CD into neuralgame/neuralgame/neural game
     ```
 1.	Type in the following commands
-```
-g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
-Followed by
-./go
-This should open up the game for you to play if there are no errors
-```
+	```
+	g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
+	Followed by
+	./go
+	This should open up the game for you to play if there are no errors
+	```
 
 ### FLTK Information
 
-1.The Project Used FLTK to create it's GUI. Links that were used can be found below: 
+1. The Project Used FLTK to create it's GUI. Links that were used can be found below: 
 
 1. Website that was used to walk me through installing FLTK 
 
