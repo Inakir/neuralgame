@@ -8,6 +8,9 @@ The video was created by a tutor named David Miller. I typed the whole neural ne
 provided in the video was changed to accomadate the scope of the game that is being implemented for the final project. David Miller's website can be found at
 http://millermattson.com/dave.
 
+####Source Files
+Source Files can be located in the neuralgame directory 
+
 ## How To Run
 ### If your computer can run .exe files
 ```
