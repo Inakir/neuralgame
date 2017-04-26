@@ -29,16 +29,16 @@ Have Fun!
     ```
 1.	Once you have SSH'd into build.tamu.edu
 	```
-	CD into the project folder.
-	CD into neuralgame/neuralgame/neural game
+	cd into the project folder.
+	cd into the 'neuralgame' directory
 	
 	Type in the following command to compile the game:
-	- g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
+	::    g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
 	
 	Once compiled run the game with the following command: 
-	- ./go
+	::    ./go
 	
-	This should open up the game for you to play if there are no errors
+	Have fun playing the game!
 	```
 
 ### FLTK Information
@@ -57,200 +57,12 @@ Have Fun!
     http://seriss.com/people/erco/fltk 
     ```
 
-1. Optional: Load CMS fixtures
+1. Add Links
 
-    - With the dev server running, navigate to `http://localhost:5000/admin`
-    - Sign in with un: `admin@example.com`, pw: `password`
-    - Click the "CMS" button at the top right of the page
-    - You should see a form with the header "New Site"
-    - Enter `sec` in the "label" field, and click "Create Site"
-    - From the command line, run:
+    - Link to Report: https://docs.google.com/document/d/1Vt0lIvnw9m2yctTW-PzG9zfHR6p3bjONT8KJZXVRPk8/edit?usp=sharing
+    - Screenshots: Coming soon!
 
     ```
-    rake comfortable_mexican_sofa:fixtures:import FROM=sec TO=sec
+    Email: s546684@email.tamu.edu
+	Phone #: Inaki Rosa
     ```
-
-### Running Tests
-
-### All
-
-```
-rake test
-```
-
-#### Unit
-
-```
-rake test:unit
-```
-
-
-
-### Assets
-
-The project used [Half-Pipe](https://github.com/d-i/half-pipe) to set up grunt, which processes CSS and Javascript.  The gem has since been uninstalled to avoid issues on Heroku, and the generated files are still used.
-
-Assets processed by the half-pipe grunt tasks are located in `public/ga`
-
-The Half-Pipe grunt tasks need node to run, and it uses Javascript and CSS files provided by Bower
-
-```
-npm install
-bower install
-```
-
-#### Assets in development
-
-In development grunt sets up a Connect server to provide the assets. It was written assuming that it would act as a proxy, but is currently being used as the Rails asset server.  Procfile.dev runs the asset server on port 5100.  To run only the configured asset server:
-
-```
-foreman start grunt -f Procfile.dev
-```
-
-Procfile.dev runs `grunt server:debug`, although the port will be different when run by itself.  For a single full asset build, run `grunt build:debug`.
-
-#### Assets in production
-
-In production all assets get compiled to static files and things are easy.  It's currently using an asset server, set via `ASSET_HOST` environment.  You may need to `spring stop` when changing the environment.
-
-shorthand
-
-```
-rake assets:staging #or production
-```
-
-long form
-
-```
-rake assets:precompile
-grunt build:public
-rake assets:s3:staging #or production
-
-#restore working environment
-rake assets:clobber
-grunt build:debug
-```
-
-The rake task relies on s3cmd, which can be installed via brew.  s3cmd requires configuration with your AWS credentials.  The task is presently hard-coded to the s3 bucket.  Task references a local git-ignored configuration file at `wg.s3cfg`, see `wg.s3cfg.example`, or create a new local config with `--config=wg.s3cfg --configure`
-
-Production assets are currently stored in a WisdomGroup S3 account. Refer to Passpack for AWS credentials.
-
-Assets must be CORS acessible.  For S3, set in Bucket properties, Permissions, Edit CORS configuration.
-
-Wildcard policy:
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-  <CORSRule>
-    <AllowedOrigin>*</AllowedOrigin>
-    <AllowedMethod>GET</AllowedMethod>
-    <MaxAgeSeconds>3000</MaxAgeSeconds>
-    <AllowedHeader>Authorization</AllowedHeader>
-  </CORSRule>
-</CORSConfiguration>
-```
-
-### Database
-
-A private database *may* be used.
-
-```
-initdb db/postgres
-foreman start postgres -f Procfile.dev
-
-rake db:reset
-
-# adds fairs and large number of companies and registrations
-rake db:data_generation
-```
-
-#### Obtaining a database dump
-
-SSH onto the server:
-
-```bash
-$ ssh deploy@sec.wisdomgroup.com
-```
-
-Note the database name that you'd like to dump:
-
-```bash
-sec_production - for the production database
-sec_staging - for the staging database
-```
-Execute the following command:
-
-```bash
-$ pg_dump pg_dump --no-acl --no-owner --format=c db_name > dump_file_name.dump
-```
-
-### CMS Fixtures
-
-To load CMS fixtures, first create a site in Comfy with an identifier of `sec`. Then load the fixtures:
-
-```
-rake comfortable_mexican_sofa:fixtures:import FROM=sec TO=sec
-```
-
-### Webserver
-
-Foreman may be used in lieu of `rails s`.  This will load a `.env` file if present, simulating systems like Heroku where configuration is provided by the environment.  See example.env for the expected fields.  Foreman runs rails on port 5000.  You may need to `spring stop` when changing the environment.
-
-```
-foreman start web -f Procfile.dev
-```
-
-### DigitalOcean
-
-  - Deploying build to remote server
-
-    ```
-    $ cap <environment> deploy
-    ```
-
-    Note: Replace <environment> with 'production' or 'staging'
-
-    **Only commits on the branch that matches the environment name will be deployed.**
-
-  - seed the database
-
-    ```
-    $ cap production rails:rake:db:seed
-    ```
-
-    Note:  This should only be ran once.
-
-  - start Rails console
-
-    ```
-    $ cap <environment> rails:console
-    ```
-
-    Note: Replace <environment> with 'production' or 'staging'
-
-  - restart Rails server
-
-    ```
-    $ cap production deploy:restart
-    ```
-
-  - references
-
-    [Capistrano Rails Task Collection](https://github.com/dei79/capistrano-rails-collection)
-
-  - locating log files
-
-  ```
-  /var/log/nginx/error.log
-  ```
-
-  Note:  The plan will be to eventually move the logs to the standard location.
-
-  ```
-  /u/apps/sec_production/shared/log/production.log
-  ```
-
-## Testing
-
-Some testing is performed using [Capybara](http://www.rubydoc.info/github/jnicklas/capybara/master) with the [Poltergeist](https://github.com/teampoltergeist/poltergeist/tree/v1.6.0) (PhantomJS) driver.  PhantomJS must be installed separately, the Poltergeist readme has instructions for different operation systems.
