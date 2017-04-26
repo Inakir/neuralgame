@@ -9,7 +9,7 @@ http://millermattson.com/dave.
 
 ### How To Run
 
-If your computer can run .exe files
+	- If your computer can run .exe files
 
     ```
     Download the Project
