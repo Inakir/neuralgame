@@ -1,4 +1,5 @@
-### What is this?
+## Overview
+### What is This Game?
 This is a guessing game implemented on a Neural Network. The goal of the game is to guess the inputs of the user by using Artificial Intelligence.
 
 ### Neural Network Information
@@ -9,27 +10,27 @@ http://millermattson.com/dave.
 
 ## How To Run
 ### If your computer can run .exe files
-
-    ```
-    Download the Project
-	Go to the 'Release' directory
-	Double click 'neuralgame.exe'
-	Have Fun!
-    ```
+```
+Download the Project
+Go to the 'Release' directory
+Double click 'neuralgame.exe'
+Have Fun!
+```
 
 ### On build.tamu.edu
 
+1. Configure Putty
     ```
     Enable XMING
 	Open up putty
 	In the left hand side go to Connection->SSH->X11
 	Check the box that says "Enable X11 forwarding"
 	SSH into build.tamu.edu
+    ```
+1.	Once you have SSH'd into build.tamu.edu
+	```
 	CD into the project folder.
 	CD into neuralgame/neuralgame/neural game
-    ```
-1.	Type in the following commands
-	```
 	g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
 	Followed by
 	./go
