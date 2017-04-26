@@ -1,0 +1,102 @@
+### What is SEC?
+The Texas A & M University Student Engineers’ Council (SEC) is the representative body for all students in the Dwight Look College of Engineering at TAMU. The organization is run by students, and all major decisions are made by students.
+
+### What will this app do?
+This app will be a registration hub for all the events hosted by the student Engineers' Council
+
+### More Information
+For background information on SEC, visit their [existing web site](http://sec.tamu.edu).
+
+### Setting up the project
+
+###### Prerequisites: Ruby 2.2.2, Bundler, Node/npm
+
+1. Install dependencies
+
+    ```
+    bundle install
+    ```
+
+1. Command to run after bundle install
+
+    ```
+    rails generate devise:install
+    ```
+
+1. Set up environment variables
+
+    ```
+    ```
+
+1. Create local db
+
+    ```
+    initdb db/my_database_development -U user
+    ```
+
+1. Run migrations
+
+    ```
+    pg_ctl start -D db/my_database_development/
+    rake db:migrates
+    rake db:seed
+    pg_ctl stop -D db/my_database_development/
+    ```
+
+1. Seed db
+
+    ```
+    pg_ctl start -D db/my_database_development/
+    rake db:seed
+    pg_ctl stop -D db/my_database_development/
+
+    run the following psql command on the database
+    insert into comfy_cms_sites values(1,'SEC registration','sec','http://127.0.0.1:3000','','en','f');
+    ```
+
+### Running Tests
+
+### All
+
+```
+rake test
+```
+
+#### Unit
+
+```
+rake test:unit
+```
+
+### Assets
+
+```
+```
+
+### Database
+
+A private database *may* be used.
+
+```
+initdb db/my_database_development
+rake db:migrate
+```
+
+
+### DigitalOcean
+
+## Testing
+
+## Bug Database
+
+1. Cannot load bcrypt
+    ```
+    Uninstall bcrypt and bcrypt-ruby by running these two commands:
+    gem uninstall bcrypt
+    gem uninstall bcrypt-ruby
+
+    Install it again with gem install bcrypt --platform=ruby
+    Run bundle install
+
+    *You may have to restart rails server, try above first
+    ```
