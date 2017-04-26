@@ -13,6 +13,7 @@
 #include <fstream>
 #include <sstream>
 
+//All the FLTK stuff
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Text_Display.H>
@@ -23,31 +24,43 @@
 
 using namespace std;
 
-Fl_Window window(800, 400, "Guessing game");
-vector<unsigned> topology = { 32,16,16,8,4,4,4,2,1 };
-Net nnet(topology);
-vector<double> inputs, targets, results;
-vector<double> user_inputs, AI_guesses;
-int trainSamples = 500;
-string instr;
+Fl_Window window(800, 400, "Guessing game");	//fltk window for the game
+
+vector<unsigned> topology = { 32,16,16,8,4,4,4,2,1 };	//Each value stands for how many neurons make up a layer. 
+														//Each layer is connected in the order that they are stored
+														//So the first and last values stand for the input and outputs 
+														//layers respectively, with all the values in between
+														//standing for hidden layers
+Net nnet(topology);								//Initializes the net based on the given topology
+
+vector<double> inputs, targets, results;		//These are the vectors that are used to feed the net
+vector<double> user_inputs, AI_guesses;			//These hold all the values inputted by the user and all the guesses done by the AI
+
+int trainSamples = 500;							//Sets how many samples are taken at teach points
+
+string instr;									//All the following strings make up the message displayed by the window
 string user_training = "\nTraining Choices: ";
 string user_choices = "\nYour Choices: ";
 string AI_choices = "\nAI Guesses:   ";
-double percent;
+
+double avg_blue = 0;				//These values are used by the AI to determine each guess that is made
+double avg_red = 0;					//They hold the averages of red and blue choices as well as the total amount of red
+double bluesz = .000001;			// and blue choices are made, respectively, They are a decimial because they are used to divide
+double redsz = .000001;				// and they can't be zero since there might not always be a red or blue choice
+
+double percent;						//These values are used at the end to determine how many correct guesses were made
 int correct_guesses;
-double avg_blue = 0;
-double avg_red = 0;
-double bluesz = .000001;
-double redsz = .000001;
 int score = 0; 
 
+//0-31 32-63 64-95
+//void that ends the game and sets the information for the last window
 void endGame()
 {
 	correct_guesses = 0;
 	user_training = "\nTraining Choices: ";
 	user_choices = "\nYour Choices: ";
 	AI_choices = "\nAI Guesses:   ";
-	//0-31 32-63 64-95
+	//Fills in the training string for indexes 0-63
 	for (int i = 0; i <= 63; i++) {
 
 		if (user_inputs[i] == 1.0)
@@ -60,6 +73,7 @@ void endGame()
 		}
 	}
 
+	//Fills in the user choice string string for indexes 64-95
 	for (int i = 64; i <= 95; i++) {
 
 		if (user_inputs[i] == 1.0)
@@ -72,6 +86,7 @@ void endGame()
 		}
 	}
 	
+	//Fills in the AI string string for indexes 64-95 and calculates percentage correct
 	for (int i = 0; i < 32; i++)
 	{
 		if (AI_guesses[i] == user_inputs[i + 64])
@@ -90,8 +105,12 @@ void endGame()
 	percent = correct_guesses / 32.0;
 }
 
+
+//used for training the net, given an index uses that as the start of a string of inputs 
+//and one output
 void fillValues(int index)
 {
+	//keeps track of how many elements we've gone through
 	int count = 0;
 
 	//loops until 32 inputs are found
@@ -103,12 +122,11 @@ void fillValues(int index)
 		index++;
 	}
 
-	//cout << index << " ";
 	//after 32 inputs have been filled, the 33rd is the output
 	targets.push_back(user_inputs[index]);
-	//cout << endl;
 }
 
+//prints out vectors with a predefined message
 void showVectorVals(string label, vector<double> &v)
 {
 	cout << label << " ";
@@ -119,10 +137,10 @@ void showVectorVals(string label, vector<double> &v)
 	cout << endl;
 }
 
-//t = 0: First text draw
-//t = 1: User inputs < 64
-//t = 2: User inputs > 64, AI now guessing 
-//t > 2: Game is done
+//Case 1: First text draw
+//Case 2: User inputs < 64
+//Case 3: User inputs > 64, AI now guessing 
+//Case 4: Game is done
 void setText()
 {
 	//0-31 32-63 64-95
@@ -181,9 +199,11 @@ void setText()
 	window.redraw();
 }
 
+//trains the neural net
+//has outputs commented out for final product efficiency 
 void train()
 {
-	int index = 0;
+	int index = 0;		//filled in during analysis 
 	avg_blue = 0;
 	avg_red  = 0;
 	bluesz = .000001;
@@ -246,6 +266,7 @@ void train()
 	}
 }
 
+//AI method. Trains the neural net and then makes a guess
 void AI()
 {
 	//0-31 32-63 64-95
@@ -279,6 +300,7 @@ void AI()
 	//This next line is for debugging purposes
 	//cout << correct << " " << avg_red << " " << avg_blue << endl;
 		
+	// Folowing ifs decide the guess
 	if (results[0] < mid) 
 	{
 		if (correct) 
@@ -309,9 +331,11 @@ void AI()
 }
 
 
-//0-31 32-63 64-95
+//Activated when the red button is pressed
 static void redPress(Fl_Widget *w, void* data) 
 {
+	//fills in the user inputs. After 64 values have been inputted the AI starts guessing. The AI retrains itself before guessing. This is why the call to the fuction AI comes
+	//after the previous input, because it'd be cheating if it trained itself with the results already in the list so it doesn't add that value to the list until after the guess.
 	if (user_inputs.size() < 64) 
 	{ 
 		user_inputs.push_back(1.0);
@@ -339,11 +363,13 @@ static void redPress(Fl_Widget *w, void* data)
 	setText();
 }
 
+//Activated when the red button is pressed
 static void bluePress(Fl_Widget *w, void* data) 
 {
-	//fills in the user inputs. After 64 values have been inputted the AI starts guessing. The AI retrains itself before guessing. This is why the call to the fuction AI got moved up in 
-	//the else statement, because it'd be cheating if it trained itself with the results already in the list so it doesn't add that value to the list until after the guess.
-	if (user_inputs.size() < 64) 
+	//fills in the user inputs. After 64 values have been inputted the AI starts guessing. The AI retrains itself before guessing. This is why the call to the fuction AI comes
+	//after the previous input, because it'd be cheating if it trained itself with the results already in the list so it doesn't add that value to the list until after the guess.
+	if (user_inputs.size() < 64)
+		if (user_inputs.size() < 64)
 	{ 
 		user_inputs.push_back(0.0);
 		//user_training += "b";
