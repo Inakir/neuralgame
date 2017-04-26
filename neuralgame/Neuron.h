@@ -28,13 +28,13 @@ struct Connection
 class Neuron
 {
 public:
-	Neuron(unsigned numOutputs, unsigned myIndex);
-	void setOutputVal(double val) { m_outputVal = val; }
-	double getOutputVal(void) const { return m_outputVal; }
-	void feedForward(const Layer &prevLayer);
-	void calcOutputGradients(double targetVal);
-	void calcHiddenGradients(const Layer &nextLayer);
-	void updateInputWeights(Layer &prevLayer);
+	Neuron(unsigned numOutputs, unsigned myIndex);			//Neuron Constructor
+	void setOutputVal(double val) { m_outputVal = val; }	//sets output 
+	double getOutputVal(void) const { return m_outputVal; }	//gets output
+	void feedForward(const Layer &prevLayer);				//used to give it inputs
+	void calcOutputGradients(double targetVal);				//gets the gradients of the outputs
+	void calcHiddenGradients(const Layer &nextLayer);		//gets the gradients of the hidden layers
+	void updateInputWeights(Layer &prevLayer);				//changes the weights
 
 private:
 	static double eta;   // [0.0..1.0] overall net training rate

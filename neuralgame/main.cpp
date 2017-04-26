@@ -5,7 +5,6 @@
 //main.cpp
 //This is the main page and handles the entirety of the game except the neural network stuff. 
 
-
 #include <vector>
 #include <iostream>
 #include <cstdlib>
