@@ -31,9 +31,13 @@ Have Fun!
 	```
 	CD into the project folder.
 	CD into neuralgame/neuralgame/neural game
-	g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
-	Followed by
-	./go
+	
+	Type in the following command to compile the game:
+	- g++ `fltk-config --cxxflags` main.cpp Net.h Neuron.h Neuron.cpp Net.cpp `fltk-config --ldflags` -o go
+	
+	Once compiled run the game with the following command: 
+	- ./go
+	
 	This should open up the game for you to play if there are no errors
 	```
 
