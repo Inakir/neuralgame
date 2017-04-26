@@ -369,7 +369,6 @@ static void bluePress(Fl_Widget *w, void* data)
 	//fills in the user inputs. After 64 values have been inputted the AI starts guessing. The AI retrains itself before guessing. This is why the call to the fuction AI comes
 	//after the previous input, because it'd be cheating if it trained itself with the results already in the list so it doesn't add that value to the list until after the guess.
 	if (user_inputs.size() < 64)
-		if (user_inputs.size() < 64)
 	{ 
 		user_inputs.push_back(0.0);
 		//user_training += "b";
